@@ -1,0 +1,19 @@
+"",marr_reg_list[[1]],marr_reg_list[[2]],fert_reg_list[[1]],fert_reg_list[[2]]
+Dependent Var.:,marr,marr,fertility,fertility
+ , , , , 
+CP,0.0031 (0.0120),0.0029 (0.0120),-0.0021 (0.0028),-0.0023 (0.0028)
+patient_male,0.0027*** (0.0008),0.0028*** (0.0008),-0.0009*** (0.0002),-0.0009*** (0.0002)
+CP x patient_male,-0.0234 (0.0155),-0.0233 (0.0155),0.0008 (0.0037),0.0009 (0.0037)
+Fixed-Effects:,------------------,------------------,-------------------,-------------------
+birth_year,Yes,Yes,Yes,Yes
+patient_birth_year,Yes,Yes,Yes,Yes
+year,Yes,Yes,Yes,Yes
+f_birth_year,Yes,Yes,Yes,Yes
+m_birth_year,Yes,Yes,Yes,Yes
+father_edu,No,Yes,No,Yes
+mother_edu,No,Yes,No,Yes
+__________________,__________________,__________________,___________________,___________________
+S.E.: Clustered,by: ID,by: ID,by: ID,by: ID
+Observations,"6,621,842","6,621,518","6,802,772","6,802,410"
+R2,0.17021,0.17033,0.00909,0.00920
+Within R2,1.5e-5,1.52e-5,4.76e-6,4.8e-6

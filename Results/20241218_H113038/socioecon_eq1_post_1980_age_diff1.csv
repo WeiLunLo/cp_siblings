@@ -1,0 +1,18 @@
+"",income_reg_list[[1]],income_reg_list[..,log_income_reg_l..,log_income_reg_l..,work_reg_list[[..,work_reg_list[[..,edu_reg_list[[1]],edu_reg_list[[2]],edu_reg_list[[3]],edu_reg_list[[4]]
+Dependent Var.:,income,income,log_income,log_income,work,work,highest_edu,highest_edu,bachelor,bachelor
+ , , , , , , , , , , 
+CP,"-11,682.7* (5,603.4)","-8,765.9 (5,583.1)",-0.0259* (0.0113),-0.0191. (0.0112),-0.0157. (0.0087),-0.0149. (0.0087),-0.1593** (0.0493),-0.0965* (0.0472),-0.0342*** (0.0094),-0.0234** (0.0091)
+patient_male,"-1,951.3** (618.5)","-1,774.4** (613.1)",-0.0036** (0.0012),-0.0032** (0.0012),-0.0015 (0.0009),-0.0016. (0.0009),-0.0145* (0.0057),-0.0112* (0.0055),-0.0035*** (0.0011),-0.0030** (0.0010)
+Fixed-Effects:,--------------------,------------------,------------------,------------------,-----------------,-----------------,------------------,-----------------,-------------------,------------------
+birth_year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+patient_birth_year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+year,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No
+f_birth_year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+m_birth_year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+father_edu,No,Yes,No,Yes,No,Yes,No,Yes,No,Yes
+mother_edu,No,Yes,No,Yes,No,Yes,No,Yes,No,Yes
+__________________,____________________,__________________,__________________,__________________,_________________,_________________,__________________,_________________,___________________,__________________
+S.E. type,by: ID,by: ID,by: ID,by: ID,by: ID,by: ID,Heteroskedas.-rob.,Heteroskeda.-rob.,Heteroskedast.-rob.,Heteroskedas.-rob.
+Observations,"6,396,376","6,396,085","4,513,133","4,512,989","6,396,376","6,396,085","716,425","716,396","716,425","716,396"
+R2,0.05703,0.06718,0.10632,0.11837,0.00551,0.01014,0.07597,0.14739,0.08017,0.14164
+Within R2,1.78e-5,1.35e-5,1.57e-5,1.13e-5,6.05e-6,6.16e-6,2.38e-5,1.17e-5,3.5e-5,2.15e-5

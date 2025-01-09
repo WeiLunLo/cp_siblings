@@ -1,0 +1,12 @@
+"",model 1,model 2,model 3,model 4
+Dependent Var.:,father_edu,mother_edu,f_bachelor,m_bachelor
+ , , , , 
+CP,-0.4019*** (0.0520),-0.4854*** (0.0500),-0.0623*** (0.0088),-0.0769*** (0.0088)
+Fixed-Effects:,-------------------,-------------------,-------------------,-------------------
+f_birth_year,Yes,No,Yes,No
+m_birth_year,No,Yes,No,Yes
+_______________,___________________,___________________,___________________,___________________
+S.E. type,Heteroskedast.-rob.,Heteroskedast.-rob.,Heteroskedast.-rob.,Heteroskedast.-rob.
+Observations,"1,071,479","1,075,590","1,071,479","1,075,601"
+R2,0.03124,0.02044,0.01932,0.00980
+Within R2,5.63e-5,9.02e-5,4.47e-5,6.74e-5

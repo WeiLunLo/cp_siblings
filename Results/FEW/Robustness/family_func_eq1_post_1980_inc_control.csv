@@ -1,0 +1,21 @@
+"",marr_reg_list..,marr_reg_list[[2]],marr_reg_list[[3]],marr_reg_list[[4]],fert_reg_list..,fert_reg_list[[2]],fert_reg_list[[3]],fert_reg_list[[4]]
+Dependent Var.:,marr,marr,marr,marr,fertility,fertility,fertility,fertility
+ , , , , , , , , 
+CP,0.0065 (0.0277),0.0042 (0.0275),0.0019 (0.0270),0.0193 (0.0347),0.0026 (0.0096),0.0025 (0.0094),0.0021 (0.0094),0.0095 (0.0138)
+male,  ,-0.0753*** (0.0040),-0.0755*** (0.0040),-0.0744*** (0.0055),  ,-0.0196*** (0.0014),-0.0195*** (0.0014),-0.0186*** (0.0020)
+patient_male,  ,-0.0040 (0.0040),-0.0038 (0.0039),-0.0069 (0.0054),  ,-0.0026. (0.0014),-0.0026. (0.0014),-0.0035. (0.0020)
+Fixed-Effects:,---------------,-------------------,-------------------,-------------------,---------------,-------------------,-------------------,-------------------
+birth_year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+patient_birth_year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+f_birth_year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+m_birth_year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+father_edu,No,No,Yes,Yes,No,No,Yes,Yes
+mother_edu,No,No,Yes,Yes,No,No,Yes,Yes
+f_second_event_income,No,No,No,Yes,No,No,No,Yes
+m_second_event_income,No,No,No,Yes,No,No,No,Yes
+_____________________,_______________,___________________,___________________,___________________,_______________,___________________,___________________,___________________
+S.E.: Clustered,by: ID,by: ID,by: ID,by: ID,by: ID,by: ID,by: ID,by: ID
+Observations,"135,681","135,681","135,628","135,628","100,216","100,216","100,157","100,157"
+R2,0.11283,0.12364,0.13090,0.37113,0.00742,0.00989,0.01173,0.11450
+Within R2,1.95e-6,0.01218,0.01233,0.00973,1e-6,0.00250,0.00249,0.00144

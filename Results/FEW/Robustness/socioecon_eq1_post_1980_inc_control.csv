@@ -1,0 +1,21 @@
+"",labor_reg_list[[1]],labor_reg_list[[2]],labor_reg_list[[3]],labor_reg_list[[4]],labor_reg_list..,labor_reg_list..,labor_reg_list..,labor_reg_list..,labor_reg_list..,labor_reg_list[[1..,labor_reg_list[[1..,labor_reg_list[[1..,edu_reg_list[[1]],edu_reg_list[[2]],edu_reg_list[[3]],edu_reg_list[[4]],edu_reg_list[[5]],edu_reg_list[[6]],edu_reg_list[[7]],edu_reg_list[[8]]
+Dependent Var.:,income,income,income,income,log_income,log_income,log_income,log_income,work,work,work,work,highest_edu,highest_edu,highest_edu,highest_edu,bachelor,bachelor,bachelor,bachelor
+ , , , , , , , , , , , , , , , , , , , , 
+CP,"-26,223.6 (16,037.4)","-26,393.0. (16,025.9)","-22,446.8 (15,703.6)","-10,492.0 (20,856.2)",-0.0643 (0.0430),-0.0646 (0.0430),-0.0577 (0.0427),-0.0394 (0.0608),-0.0485 (0.0337),-0.0491 (0.0338),-0.0417 (0.0329),-0.0128 (0.0407),-0.2928. (0.1627),-0.3088. (0.1624),-0.2852. (0.1629),-0.1158 (0.2679),-0.0580. (0.0312),-0.0611* (0.0312),-0.0573. (0.0314),-0.0145 (0.0518)
+male,  ,"-9,566.4*** (2,582.3)","-9,424.5*** (2,556.2)","-13,130.6*** (3,312.5)",  ,0.0010 (0.0061),0.0010 (0.0060),0.0024 (0.0086),  ,-0.0446*** (0.0051),-0.0446*** (0.0051),-0.0527*** (0.0070),  ,-0.5759*** (0.0250),-0.5660*** (0.0242),-0.6192*** (0.0429),  ,-0.1157*** (0.0046),-0.1140*** (0.0045),-0.1187*** (0.0079)
+patient_male,  ,"1,355.6 (2,589.7)","1,194.8 (2,560.9)","-51.77 (3,325.2)",  ,0.0078 (0.0061),0.0069 (0.0060),0.0053 (0.0086),  ,-0.0012 (0.0051),-0.0017 (0.0051),-0.0054 (0.0070),  ,0.0076 (0.0249),0.0060 (0.0242),0.0128 (0.0428),  ,0.0008 (0.0046),0.0006 (0.0045),0.0037 (0.0079)
+Fixed-Effects:,--------------------,---------------------,---------------------,----------------------,----------------,----------------,----------------,----------------,----------------,-------------------,-------------------,-------------------,-----------------,-------------------,-------------------,-------------------,-----------------,-------------------,-------------------,-------------------
+birth_year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+patient_birth_year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,No,No,No,No,No,No,No,No
+f_birth_year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+m_birth_year,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
+father_edu,No,No,Yes,Yes,No,No,Yes,Yes,No,No,Yes,Yes,No,No,Yes,Yes,No,No,Yes,Yes
+mother_edu,No,No,Yes,Yes,No,No,Yes,Yes,No,No,Yes,Yes,No,No,Yes,Yes,No,No,Yes,Yes
+f_second_event_income,No,No,No,Yes,No,No,No,Yes,No,No,No,Yes,No,No,No,Yes,No,No,No,Yes
+m_second_event_income,No,No,No,Yes,No,No,No,Yes,No,No,No,Yes,No,No,No,Yes,No,No,No,Yes
+_____________________,____________________,_____________________,_____________________,______________________,________________,________________,________________,________________,________________,___________________,___________________,___________________,_________________,___________________,___________________,___________________,_________________,___________________,___________________,___________________
+S.E. type,by: ID,by: ID,by: ID,by: ID,by: ID,by: ID,by: ID,by: ID,by: ID,by: ID,by: ID,by: ID,Heteroskeda.-rob.,Heteroskedast.-rob.,Heteroskedast.-rob.,Heteroskedast.-rob.,Heteroskeda.-rob.,Heteroskedast.-rob.,Heteroskedast.-rob.,Heteroskedast.-rob.
+Observations,"140,947","140,947","140,880","140,880","92,298","92,298","92,264","92,264","140,947","140,947","140,880","140,880","41,022","41,022","41,014","41,014","41,022","41,022","41,014","41,014"
+R2,0.03136,0.03181,0.04306,0.37066,0.05015,0.05019,0.05747,0.32249,0.01579,0.01796,0.02398,0.31121,0.09679,0.10840,0.15938,0.49517,0.09306,0.10678,0.15331,0.50043
+Within R2,7.41e-5,0.00053,0.00050,0.00077,6.25e-5,0.00011,8.6e-5,3.8e-5,5.73e-5,0.00226,0.00226,0.00257,7.28e-5,0.01293,0.01322,0.01543,8.32e-5,0.01520,0.01555,0.01675

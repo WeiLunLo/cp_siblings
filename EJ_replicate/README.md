@@ -18,7 +18,7 @@ This prevalence are unusually high, and I think that the disability criteria is 
 
 There are four treatments (interactions) and two regression designs, so eight models in total for each outcome. 
 
-The first treatmen t(tb_disab) is whether the third child is disabled. The other three are defined as in the EJ paper.
+The first treatment (tb_disab) is whether the third child is disabled. The other three are defined as in the EJ paper.
 
 The first regression design only includes family fe (and year fe if any); the second design is the standard form in the paper which controls for gender and includes family fe plus birth year and birth month fe (and year fe if any). 
 
@@ -32,9 +32,9 @@ Interactions:
 
 Labor
 - work: whether she worked in that year
-- income: whether she earned labor income in that year
-- ft_work: whether she worked full-time every month in that year
-- ft_income: whether she earned labor income from a full-time job every month in that year
+- income: labor income she earned in that year
+- ft_work: whether she worked full-time for 12 months in that year
+- ft_income: labor income she earned from a full-time job for 12 months in that year
 
 Edu
 - highest_edu: her highest education level in year term in 2021

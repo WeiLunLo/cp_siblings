@@ -1,0 +1,17 @@
+"",income_reg_list[[1]],log_income_reg_l..,work_reg_list[[1]]
+Dependent Var.:,income,log_income,work
+ , , , 
+CP,"870.1 (12,754.7)",-0.0104 (0.0283),5.21e-5 (0.0143)
+male,"30,679.8*** (1,403.6)",0.0557*** (0.0031),-0.0206*** (0.0016)
+patient_male,"-1,460.2 (1,404.4)",-0.0013 (0.0031),-0.0018 (0.0016)
+Fixed-Effects:,---------------------,------------------,-------------------
+birth_year,Yes,Yes,Yes
+patient_birth_year,Yes,Yes,Yes
+year,Yes,Yes,Yes
+f_birth_year,Yes,Yes,Yes
+m_birth_year,Yes,Yes,Yes
+__________________,_____________________,__________________,___________________
+S.E.: Clustered,by: ID,by: ID,by: ID
+Observations,"1,992,534","1,570,593","1,992,534"
+R2,0.14648,0.12123,0.01351
+Within R2,0.00194,0.00119,0.00065

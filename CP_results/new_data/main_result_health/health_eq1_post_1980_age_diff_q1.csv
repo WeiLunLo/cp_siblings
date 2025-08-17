@@ -1,0 +1,17 @@
+"",model 1,model 2,model 3,model 4
+Dependent Var.:,outpatient_count,total_dot,eme_dummy,major
+ , , , , 
+CP,0.5591 (0.3682),664.4 (856.3),0.0117. (0.0069),0.0070 (0.0065)
+male,-6.786*** (0.0473),"-2,708.6*** (212.1)",-0.0131*** (0.0008),-0.0108*** (0.0007)
+patient_male,0.0066 (0.0476),-147.9 (210.1),-0.0006 (0.0008),-0.0001 (0.0007)
+Fixed-Effects:,------------------,-------------------,-------------------,-------------------
+birth_year,Yes,Yes,Yes,Yes
+patient_birth_year,Yes,Yes,Yes,Yes
+year,Yes,Yes,Yes,Yes
+f_birth_year,Yes,Yes,Yes,Yes
+m_birth_year,Yes,Yes,Yes,Yes
+__________________,__________________,___________________,___________________,___________________
+S.E.: Clustered,by: ID,by: ID,by: ID,by: ID
+Observations,"2,479,983","2,479,983","2,479,983","2,479,983"
+R2,0.11543,0.00505,0.00976,0.00502
+Within R2,0.05437,0.00035,0.00028,0.00052

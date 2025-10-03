@@ -76,7 +76,7 @@ load.year.data <- function(year) {
     data_list <- c(data_list, list(open_nhi))
   }
   dtSumDot <- rbindlist(data_list)
-  dtSumDot <- dtSumDot[, .(totalDot = sum(T_DOT), count = .N, ICD9CM_1, ICD9CM_2, ICD9CM_3), by = ID]
+  dtSumDot <- dtSumDot[, .(totalDot = sum(T_DOT), count = .N, ICD9CM_1, ICD9CM_2, ICD9CM_3), by = ID] # this line is wrong but doesnot effect the analysis
   dtSumDot[ , Year := year + 1911]
   end_timer()
   return(dtSumDot)
@@ -454,76 +454,3 @@ extensive_sib[, `:=`(family_first_event_income = f_first_event_income + m_first_
 #           m_bachelor = ifelse(father_edu >= 16, 1, 0))]
 head(extensive_sib)
 write_parquet(extensive_sib, paste0(output.dir, "/sample.parquet"))
-
-# ---------- Parental Health ----------
-f_health_list <- list()
-for (y in 89:110) {
-  start_timer()
-  message(y)
-  opdte <- read_opdte(y, extensive_sib$F_ID)
-  
-  setnames(opdte,
-           c("ID",
-             "outpatient_count",
-             "total_dot",
-             "chronic",
-             "major",
-             "eme",
-             "useless"),
-           c("F_ID",
-             "f_outpatient_count",
-             "f_total_dot",
-             "f_chronic",
-             "f_major",
-             "f_eme",
-             "f_useless"))
-  
-  father_health <- merge(extensive_sib[birth_year == y + 1911, .(ID, F_ID)], opdte, all.x = TRUE, by = "F_ID")
-  father_health[, `:=`(f_outpatient_count = ifelse(is.na(f_outpatient_count), 0, f_outpatient_count),
-                       f_total_dot = ifelse(is.na(f_total_dot), 0, f_total_dot),
-                       f_chronic = ifelse(is.na(f_chronic), 0, f_chronic),
-                       f_major = ifelse(is.na(f_major), 0, f_major),
-                       f_eme = ifelse(is.na(f_eme), 0, f_eme),
-                       f_useless = ifelse(is.na(f_useless), 0, f_useless))]
-  f_health_list <- c(f_health_list, list(father_health))
-  end_timer()
-}
-father_health <- rbindlist(f_health_list)
-head(father_health)
-write_parquet(father_health, paste0(output.dir, "/father_health.parquet"))
-rm(father_health, f_health_list, opdte); gc()
-
-m_health_list <- list()
-for (y in 89:110) {
-  start_timer()
-  message(y)
-  opdte <- read_opdte(y, extensive_sib$M_ID)
-  setnames(opdte,
-           c("ID",
-             "outpatient_count",
-             "total_dot",
-             "chronic",
-             "major",
-             "eme",
-             "useless"),
-           c("M_ID",
-             "m_outpatient_count",
-             "m_total_dot",
-             "m_chronic",
-             "m_major",
-             "m_eme",
-             "m_useless"))
-  
-  mother_health <- merge(extensive_sib[birth_year == y + 1911, .(ID, M_ID)], opdte, all.x = TRUE, by = "M_ID")
-  mother_health[, `:=`(m_outpatient_count = ifelse(is.na(m_outpatient_count), 0, m_outpatient_count),
-                       m_total_dot = ifelse(is.na(m_total_dot), 0, m_total_dot),
-                       m_chronic = ifelse(is.na(m_chronic), 0, m_chronic),
-                       m_major = ifelse(is.na(m_major), 0, m_major),
-                       m_eme = ifelse(is.na(m_eme), 0, m_eme),
-                       m_useless = ifelse(is.na(m_useless), 0, m_useless))]
-  m_health_list <- c(m_health_list, list(mother_health))
-  end_timer()
-}
-mother_health <- rbindlist(m_health_list)
-head(mother_health)
-write_parquet(mother_health, paste0(output.dir, "/mother_health.parquet"))

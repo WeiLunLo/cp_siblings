@@ -64,18 +64,18 @@ dt[, patient_death_year := patient_D_DATE %/% 10000]
 ############
 ## income
 ############
-# dt_w_AMT <- lapply((89:110), merge_with_AMT) %>% rbindlist()
-# dt_w_AMT <- dt_w_AMT[age >= 25 & age < 65]
-# dt_w_AMT[, CP_male := CP*male]
-# dt_w_AMT[, CP_patient_male := CP*patient_male]
-# 
-# # we don't have education level information now
-# # dt_w_AMT[, `:=`(f_bachelor = ifelse(father_edu >= 16, 1, 0),
-# #                 m_bachelor = ifelse(mother_edu >= 16, 1, 0))]
-# 
-# write_parquet(dt_w_AMT, paste0(output.dir, "/dt_w_AMT.parquet"))
-# 
-# rm(dt_w_AMT); gc()
+dt_w_AMT <- lapply((89:110), merge_with_AMT) %>% rbindlist()
+dt_w_AMT <- dt_w_AMT[age >= 25 & age < 65]
+dt_w_AMT[, CP_male := CP*male]
+dt_w_AMT[, CP_patient_male := CP*patient_male]
+ 
+# we don't have education level information now
+# dt_w_AMT[, `:=`(f_bachelor = ifelse(father_edu >= 16, 1, 0),
+#                 m_bachelor = ifelse(mother_edu >= 16, 1, 0))]
+ 
+write_parquet(dt_w_AMT, paste0(output.dir, "/dt_w_AMT.parquet"))
+ 
+rm(dt_w_AMT); gc()
 
 
 

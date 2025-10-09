@@ -48,6 +48,11 @@ end_timer <- function() { end_time <<- Sys.time(); print(end_time - start_time) 
 birth_yr_ub <- 2030
 birth_yr_lb <- 1980
 
+subsample <- list(
+  list(cond = "TRUE", suffix = "", num = 1),
+  list(cond = "flag_early_link == 1 & flag_p_early_link == 1", suffix = "_EL", num = 2)
+)
+
 # # ---------- 1. Socioeconomic ----------
 # load panel
 AMT <- open_dataset(paste0(output.dir, "/dt_w_AMT.parquet")) %>%
@@ -81,43 +86,55 @@ models <- c(
 )
 
 # ---------- Income ----------
-labor_reg_list <- list()
-control_mean_labor <- data.table(variable = c(), control_mean = c())
-for (Y in Ys) {
-  message(Y)
-  formulas <- lapply(models, function(x) {paste(Y, x)})
+for (s in 1:length(subsample)) {
+  cond <- subsample[[s]]$cond
+  suffix <- subsample[[s]]$suffix
+  
+  message(paste("Sample Condition:", cond))
+  message(paste("Saving Suffix:", suffix))
+  
+  labor_reg_list <- list()
+  control_mean_labor <- data.table(variable = c(), control_mean = c())
+  for (Y in Ys) {
+    message(Y)
+    formulas <- lapply(models, function(x) {paste(Y, x)})
+    
+    for (i in 1:length(formulas)) {
+      f <- formulas[i]
+      print(f)
+      #find all variables we need in the formula
+      vars <- gsub("[|+~]", "", f)
+      vars <- strsplit(vars, "[, ]+")[[1]]
+      print(vars)
+      # subset rows with non-NA values
+      # 原:AMT_filtered <- AMT[complete.cases(dt[, ..vars])]
+      AMT_filtered <- AMT[complete.cases(AMT[, ..vars])]  # 改
+      AMT_filtered <- AMT_filtered[eval(parse(text = cond))] # TEST
+      
+      control_mean_labor <- rbind(control_mean_labor,
+                                  data.table(paste0(Y, i),
+                                             mean(AMT_filtered[CP == 0, get(Y)], na.rm = TRUE),
+                                             sd(AMT_filtered[CP == 0, get(Y)], na.rm = TRUE)))
+      
+      reg <- feols(as.formula(f[[1]]),
+                   data = AMT_filtered,
+                   cluster = c("ID"))
+      labor_reg_list <- c(labor_reg_list, list(reg))
+      rm(AMT_filtered); gc()
+    }
+  }
+  esttable(labor_reg_list)
+  rm(AMT); gc()
+  # 
+  # 
+  # ### Save socioeconomic outcomes
+  fwrite(esttable(labor_reg_list), file.path(result.dir, paste0("/main_result/socioecon_eq1_post_1980", suffix, ".csv")))
+  fwrite(control_mean_labor, file.path(result.dir, paste0("/main_result/control_mean_post_1980_labor", suffix, ".csv")))
+  # 
+  rm(labor_reg_list);gc()
+}
 
-  for (i in 1:length(formulas)) {
-    f <- formulas[i]
-    print(f)
-    #find all variables we need in the formula
-    vars <- gsub("[|+~]", "", f)
-    vars <- strsplit(vars, "[, ]+")[[1]]
-    print(vars)
-    #subset rows with non-NA values
-    原:AMT_filtered <- AMT[complete.cases(dt[, ..vars])]
-    AMT_filtered <- AMT[complete.cases(AMT[, ..vars])]  # 改
-    control_mean_labor <- rbind(control_mean_labor,
-                                data.table(paste0(Y, i),
-                                           mean(AMT_filtered[CP == 0, get(Y)], na.rm = TRUE),
-                                           sd(AMT_filtered[CP == 0, get(Y)], na.rm = TRUE)))
 
-    reg <- feols(as.formula(f[[1]]),
-                 data = AMT_filtered,
-                 cluster = c("ID"))
-    labor_reg_list <- c(labor_reg_list, list(reg))
-    rm(AMT_filtered); gc()
-   }
- }
-esttable(labor_reg_list)
-rm(AMT); gc()
-# 
-# 
-# ### Save socioeconomic outcomes
-fwrite(esttable(labor_reg_list), file.path(result.dir, "/main_result/socioecon_eq1_post_1980.csv"))
-fwrite(control_mean_labor, file.path(result.dir, "/main_result/control_mean_post_1980_labor.csv"))
-# 
-rm(labor_reg_list);gc()
 
 
 # ---------- Health ----------

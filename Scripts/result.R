@@ -222,11 +222,13 @@ for (s in 1:length(subsample)) {
       print(f)
       # find all variables we need in the formula
       vars <- gsub("[|+~]", "", f)
-      vars <- strsplit(vars, "[, ]+")[[1]]
+      vars <- strsplit(vars, "[, ]+")[[1]]s
       print(vars)
       # subset rows with non-NA values
       # 原:opdte_filtered <- opdte[complete.cases(dt[, ..vars])]
       opdte_filtered <- opdte[complete.cases(opdte[, ..vars])]  # 改
+      opdte_filtered <- opdte_filtered[eval(parse(text = cond))] # TEST
+      
       control_mean_health <- rbind(control_mean_health,
                                    data.table(paste0(Y, i),
                                               mean(opdte_filtered[CP == 0, get(Y)], na.rm = TRUE),

@@ -31,6 +31,8 @@ result.dir <- "E:/H114028/wllo/cp_siblings/results"
 
 CleanData.dir <- "E:/H114028/CleanData/processed_data"
 YEARS <- 89L:110L
+# TEST
+SIBLING_MERGE <- "one_parent" # "two_parents"
 
 # get the icd codes for CP
 all <- FALSE
@@ -55,9 +57,9 @@ start_timer <- function() { start_time <<- Sys.time() }
 end_timer <- function() { end_time <<- Sys.time(); print(end_time - start_time) }
 
 
-###############################################################################
-### FUNCTIONS #################################################################
-###############################################################################
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### 
+### FUNCTIONS -----------------------------------------------------------------
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### 
 load.year.data <- function(year) {
   ## This function read the OPDTE files for a year and look for
   ## CP outpatient records
@@ -117,9 +119,9 @@ add_death_info <- function(dt) {
 }
 
 
-###############################################################################
-### MAIN ######################################################################
-###############################################################################
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### 
+### MAIN ----------------------------------------------------------------------
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### 
 ## Identify twins =============================================================
 # Identify twins's mother using H_BHP_BIRTH
 
@@ -258,14 +260,42 @@ pers_info <- open_dataset(paste0(output.dir, "/pers_info_relation_for_CP.parquet
 pers_info[, both_parents := ifelse(!is.na(F_ID) & !is.na(M_ID), TRUE, FALSE)]
 rm(mohw, twins, twins_M, relation_dt); gc()
 
-###############################################################################
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### 
 ## construct siblings relation, but only requires the second child be CP
-###############################################################################
-# try
-extensive_sib <- merge(pers_info, pers_info[, .(patient = ID, patient_BD = ID_BIRTHDAY, patient_S = ID_S, M_ID, F_ID)],
-                       by = c("F_ID", "M_ID"), allow.cartesian = TRUE) # 27540546; in H114028: 17295302
-# extensive_sib[, `:=`(F_ID = NULL, M_ID = NULL)]
-extensive_sib <- extensive_sib[ID_BIRTHDAY < patient_BD] # 8005732; in H114028: 499583
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### 
+# TEST: only merging on F_ID or M_ID
+if (SIBLING_MERGE == "one_parent") {
+  # Merge on F_ID
+  extensive_sib_F <- merge(pers_info[!is.na(F_ID)], pers_info[!is.na(F_ID), .(patient = ID, patient_BD = ID_BIRTHDAY, patient_S = ID_S, F_ID)],
+                           by = c("F_ID"), allow.cartesian = TRUE)
+  extensive_sib_F[, F_ID := NULL]
+  extensive_sib_F <- extensive_sib_F[ID_BIRTHDAY < patient_BD]
+  
+  # Merge on M_ID
+  extensive_sib_M <- merge(pers_info[!is.na(M_ID)], pers_info[!is.na(M_ID), .(patient = ID, patient_BD = ID_BIRTHDAY, patient_S = ID_S, M_ID)],
+                           by = c("M_ID"), allow.cartesian = TRUE)
+  extensive_sib_M[, M_ID := NULL]
+  extensive_sib_M <- extensive_sib_F[ID_BIRTHDAY < patient_BD]
+  
+  # Bind the two merges
+  extensive_sib <- rbind(extensive_sib_F, extensive_sib_M) %>% distinct()
+  
+  # Get F_ID, M_ID back
+  extensive_sib <- merge(extensive_sib, pers_info[!(is.na(F_ID) & is.na(M_ID)), .(ID, F_ID, M_ID)],
+                         by = "ID", allow.cartesian = TRUE)
+  extensive_sib <- merge(extensive_sib, pers_info[!(is.na(F_ID) & is.na(M_ID)), .(patient = ID, patient_F_ID = F_ID, patient_M_ID = M_ID)],
+                         by = "ID", allow.cartesian = TRUE)
+  
+  # If the firstborn misses a parent, get it from the second born
+  extensive_sib[is.na(F_ID), F_ID := patient_F_ID]
+  extensive_sib[is.na(M_ID), M_ID := patient_M_ID]
+  extensive_sib[, `:=`(patient_F_ID = NULL, patient_M_ID = NULL)]
+} else if (SIBLING_MERGE == "two_parents") {
+  extensive_sib <- merge(pers_info, pers_info[, .(patient = ID, patient_BD = ID_BIRTHDAY, patient_S = ID_S, M_ID, F_ID)],
+                         by = c("F_ID", "M_ID"), allow.cartesian = TRUE) # 27540546; in H114028: 17295302
+  # extensive_sib[, `:=`(F_ID = NULL, M_ID = NULL)]
+  extensive_sib <- extensive_sib[ID_BIRTHDAY < patient_BD] # 8005732; in H114028: 499583
+}
 
 # `count` denotes the number of younger siblings one has
 extensive_sib[, count := .N, by = ID]
@@ -452,4 +482,10 @@ extensive_sib[, `:=`(family_first_event_income = f_first_event_income + m_first_
 # extensive_sib[, `:=`(f_bachelor = ifelse(father_edu >= 16, 1, 0),
 #           m_bachelor = ifelse(father_edu >= 16, 1, 0))]
 head(extensive_sib)
-write_parquet(extensive_sib, paste0(output.dir, "/sample.parquet"))
+
+# TEST: save with different file names based on SIBLING_MERGE options
+if (SIBLING_MERGE == "one_parent") {
+  write_parquet(extensive_sib, paste0(output.dir, "/sample_one_parent_merge.parquet"))
+} else if (SIBLING_MERGE == "two_parents") {
+  write_parquet(extensive_sib, paste0(output.dir, "/sample.parquet"))
+}

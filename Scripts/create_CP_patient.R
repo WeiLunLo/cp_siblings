@@ -275,7 +275,7 @@ if (SIBLING_MERGE == "one_parent") {
   extensive_sib_M <- merge(pers_info[!is.na(M_ID)], pers_info[!is.na(M_ID), .(patient = ID, patient_BD = ID_BIRTHDAY, patient_S = ID_S, M_ID)],
                            by = c("M_ID"), allow.cartesian = TRUE)
   extensive_sib_M[, M_ID := NULL]
-  extensive_sib_M <- extensive_sib_F[ID_BIRTHDAY < patient_BD]
+  extensive_sib_M <- extensive_sib_M[ID_BIRTHDAY < patient_BD]
   
   # Bind the two merges
   extensive_sib <- rbind(extensive_sib_F, extensive_sib_M) %>% distinct()
@@ -284,7 +284,7 @@ if (SIBLING_MERGE == "one_parent") {
   extensive_sib <- merge(extensive_sib, pers_info[!(is.na(F_ID) & is.na(M_ID)), .(ID, F_ID, M_ID)],
                          by = "ID", allow.cartesian = TRUE)
   extensive_sib <- merge(extensive_sib, pers_info[!(is.na(F_ID) & is.na(M_ID)), .(patient = ID, patient_F_ID = F_ID, patient_M_ID = M_ID)],
-                         by = "ID", allow.cartesian = TRUE)
+                         by = "patient", allow.cartesian = TRUE)
   
   # If the firstborn misses a parent, get it from the second born
   extensive_sib[is.na(F_ID), F_ID := patient_F_ID]
